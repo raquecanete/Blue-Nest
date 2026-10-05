@@ -385,7 +385,12 @@ onBeforeUnmount(() => {
             <div class="spotlight-skills" aria-label="Skills">
               <span v-for="skill in member.skills.slice(0, 3)" :key="skill">{{ skill }}</span>
             </div>
-            <a :href="member.projectLink" class="spotlight-project">
+            <a
+              :href="member.projectLink"
+              :target="member.projectLink.startsWith('https://') ? '_blank' : undefined"
+              :rel="member.projectLink.startsWith('https://') ? 'noopener noreferrer' : undefined"
+              class="spotlight-project"
+            >
               <span><small>Selected contribution</small>{{ member.signatureProject }}</span>
               <span aria-hidden="true">↗</span>
             </a>
@@ -494,7 +499,12 @@ onBeforeUnmount(() => {
               </div>
             </div>
 
-            <a class="profile-project-link" :href="selectedMember.projectLink">
+            <a
+              class="profile-project-link"
+              :href="selectedMember.projectLink"
+              :target="selectedMember.projectLink.startsWith('https://') ? '_blank' : undefined"
+              :rel="selectedMember.projectLink.startsWith('https://') ? 'noopener noreferrer' : undefined"
+            >
               {{ selectedMember.signatureProject }} <span aria-hidden="true">↗</span>
             </a>
 

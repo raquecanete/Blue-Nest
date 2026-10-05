@@ -5,6 +5,7 @@ export interface StoryProject {
   category: string
   description: string
   role: string
+  liveUrl?: string
   outcome: string
   overview: string
   challenge: string
@@ -82,13 +83,14 @@ export const storyCopy: {
   }
 }
 export const siteCopy: {
-  titles: Record<'home' | 'work' | 'project' | 'about' | 'people' | 'contact', string>
+  titles: Record<'home' | 'work' | 'project' | 'about' | 'services' | 'people' | 'contact', string>
   navigation: {
     home: string
     mainLabel: string
     footerLabel: string
     work: string
     about: string
+    services: string
     people: string
     contact: string
     contactCta: string
@@ -110,6 +112,7 @@ export const siteCopy: {
     services: string
     story: string
     gallery: string
+    livePage: string
     challenge: { label: string; title: string }
     approach: { label: string; title: string }
     outcome: { label: string; title: string }

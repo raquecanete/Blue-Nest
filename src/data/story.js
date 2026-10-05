@@ -133,6 +133,7 @@ export const siteCopy = {
     work: 'Our Work — Blue Nest',
     project: 'Project — Blue Nest',
     about: 'About Us — Blue Nest',
+    services: 'Services — Blue Nest',
     people: 'People — Blue Nest',
     contact: 'Contact — Blue Nest',
   },
@@ -142,6 +143,7 @@ export const siteCopy = {
     footerLabel: 'Footer navigation',
     work: 'Our work',
     about: 'About us',
+    services: 'Services',
     people: 'People',
     contact: 'Contact',
     contactCta: 'Let’s talk',
@@ -163,6 +165,7 @@ export const siteCopy = {
     services: 'SERVICES',
     story: 'THE STORY',
     gallery: 'project images',
+    livePage: 'Visit live page',
     challenge: {
       label: 'THE CHALLENGE',
       title: 'Make room for what matters.',
@@ -294,6 +297,7 @@ export const projects = [
     category: 'Student workspace · 2026',
     description: 'A smarter way to plan your week.',
     role: 'Brand direction, product concept, interface design',
+    liveUrl: 'https://sulya-nine.vercel.app/',
     outcome: 'A calm student planning workspace that turns schedules into something easier to keep in view.',
     overview:
       'Sulya helps students stay on top of classes, deadlines, and the rhythm of their week. We shaped a workspace that feels clear, personal, and easy to return to when the schedule gets busy.',

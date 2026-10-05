@@ -1018,35 +1018,34 @@
   transform: translateY(0);
 }
 
-.story-floating-menu-panel button {
+.story-floating-menu-panel a {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   width: 100%;
   padding: 0.65rem 0.75rem;
-  border: 0;
   border-radius: 10px;
-  background: transparent;
   color: rgba(231, 232, 233, 0.76);
   text-align: left;
-  cursor: pointer;
+  font-size: 12px;
+  transition: color 160ms ease, background 160ms ease;
 }
 
-.story-floating-menu-panel button.is-active {
+.story-floating-menu-panel a:hover,
+.story-floating-menu-panel a:focus-visible {
   color: var(--paper);
-  background: rgba(27, 138, 208, 0.14);
+  background: rgb(231 232 233 / 8%);
 }
 
-.story-floating-menu-panel button span:first-child {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.14em;
+.story-floating-menu-panel a span:last-child {
+  color: var(--blue);
 }
 
-.story-floating-menu-panel button span:last-child {
-  font-size: 11px;
-  letter-spacing: -0.04em;
+.story-floating-menu-toggle:focus-visible,
+.story-floating-menu-panel a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
 }
 
 .story-chapter-nav {

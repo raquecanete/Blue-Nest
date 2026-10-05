@@ -5,14 +5,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type Lenis from 'lenis'
 import BlueNestLogo from './components/BlueNestLogo.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
+import SiteFloatingMenu from './components/SiteFloatingMenu.vue'
 import AboutPage from './components/about/About.vue'
 import PeoplePage from './components/people/People.vue'
+import ServicesPage from './components/services/Services.vue'
 import StoryHome from './components/story/StoryHome.vue'
 import { destroyLenis, initLenis } from './composables/useLenis.js'
 import { aboutStory } from './data/about.js'
+import { servicesPage } from './data/services.js'
 import { people, projects, siteCopy } from './data/story.js'
 
-type Page = 'home' | 'work' | 'project' | 'about' | 'people' | 'contact'
+type Page = 'home' | 'work' | 'project' | 'about' | 'services' | 'people' | 'contact'
 
 const menuOpen = ref(false)
 const currentPage = ref<Page>(getPageFromPath(window.location.pathname))
@@ -37,7 +40,7 @@ function getPageFromPath(path: string): Page {
     return projects.some((project) => project.slug === segments[1]) ? 'project' : 'work'
   }
   const page = segments[0]
-  return page === 'work' || page === 'about' || page === 'people' || page === 'contact'
+  return page === 'work' || page === 'about' || page === 'services' || page === 'people' || page === 'contact'
     ? page
     : 'home'
 }
@@ -140,6 +143,8 @@ function updateMetaDescription(page: Page) {
   meta.content =
     page === 'about'
       ? aboutStory.metaDescription
+      : page === 'services'
+        ? servicesPage.metaDescription
       : 'Blue Nest is an independent creative studio building thoughtful brands and digital experiences for people moving things forward.'
 }
 
@@ -215,6 +220,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="site-shell">
     <ScrollProgress :lenis="lenisInstance" />
+    <SiteFloatingMenu @navigate="navigate" />
     <header class="site-header" :class="{ 'site-header-dark': darkHeader }">
       <a class="brand-link" href="/" :aria-label="siteCopy.navigation.home" @click.prevent="navigate('/')">
         <BlueNestLogo class="header-logo" :class="{ 'header-logo-light': darkHeader }" />
@@ -232,6 +238,7 @@ onBeforeUnmount(() => {
       <nav class="main-nav" :class="{ 'nav-open': menuOpen }" :aria-label="siteCopy.navigation.mainLabel" data-lenis-prevent>
         <a href="/work#projects" :aria-current="currentPage === 'work' ? 'page' : undefined" @click.prevent="navigate('/work#projects')">{{ siteCopy.navigation.work }}</a>
         <a href="/about#about" :aria-current="currentPage === 'about' ? 'page' : undefined" @click.prevent="navigate('/about#about')">{{ siteCopy.navigation.about }}</a>
+        <a href="/services" :aria-current="currentPage === 'services' ? 'page' : undefined" @click.prevent="navigate('/services')">{{ siteCopy.navigation.services }}</a>
         <a href="/people#team" :aria-current="currentPage === 'people' ? 'page' : undefined" @click.prevent="navigate('/people#team')">{{ siteCopy.navigation.people }}</a>
         <a class="nav-contact" href="/contact#contact" :aria-current="currentPage === 'contact' ? 'page' : undefined" @click.prevent="navigate('/contact#contact')">
           {{ siteCopy.navigation.contactCta }} <span aria-hidden="true">↗</span>
@@ -304,7 +311,18 @@ onBeforeUnmount(() => {
             <h1 :class="{ 'project-title-long': selectedProject.slug === 'apparel-one-indonesia' }">
               {{ selectedProject.name }}
             </h1>
-            <p>{{ selectedProject.outcome }}</p>
+            <div>
+              <p>{{ selectedProject.outcome }}</p>
+              <a
+                v-if="selectedProject.liveUrl"
+                :href="selectedProject.liveUrl"
+                class="project-live-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ siteCopy.project.livePage }} <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
           <div class="project-detail-cover">
             <img :src="selectedProject.image" :alt="selectedProject.label" />
@@ -382,6 +400,8 @@ onBeforeUnmount(() => {
 
       <AboutPage v-if="currentPage === 'about'" :navigate="navigate" :lenis="lenisInstance" />
 
+      <ServicesPage v-if="currentPage === 'services'" :navigate="navigate" :lenis="lenisInstance" />
+
       <PeoplePage v-if="currentPage === 'people'" :lenis="lenisInstance" />
 
       <section v-if="currentPage === 'contact'" id="contact" class="contact-section section-pad">
@@ -419,6 +439,7 @@ onBeforeUnmount(() => {
         <nav :aria-label="siteCopy.navigation.footerLabel">
           <a href="/work" @click.prevent="navigate('/work')">{{ siteCopy.navigation.work }}</a>
           <a href="/about" @click.prevent="navigate('/about')">{{ siteCopy.navigation.about }}</a>
+          <a href="/services" @click.prevent="navigate('/services')">{{ siteCopy.navigation.services }}</a>
           <a href="/people" @click.prevent="navigate('/people')">{{ siteCopy.navigation.people }}</a>
           <a href="/contact" @click.prevent="navigate('/contact')">{{ siteCopy.navigation.contact }}</a>
         </nav>

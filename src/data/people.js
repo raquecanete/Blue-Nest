@@ -10,8 +10,8 @@ export const people = [
     skills: ['UI systems', 'Accessibility', 'Frontend craft', 'Design systems'],
     photo: new URL('../assets/images/raque.png', import.meta.url).href,
     accent: '#1B8AD0',
-    signatureProject: 'Apparel One Indonesia',
-    projectLink: '/work/apparel-one-indonesia',
+    signatureProject: 'Personal portfolio website',
+    projectLink: 'https://rqx-canete.vercel.app/',
     socials: [
       { label: 'Email', href: 'mailto:raquecanete60@gmail.com' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/' },

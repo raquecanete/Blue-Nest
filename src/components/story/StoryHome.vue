@@ -24,20 +24,11 @@ const emit = defineEmits<{ navigate: [path: string] }>()
 
 const root = ref<HTMLElement | null>(null)
 const preloaderActive = ref(true)
-const storyMenuOpen = ref(false)
-const showStoryMenu = ref(false)
 const activeChapter = ref(chapters[0]?.id ?? 'story-spark')
-const chapterLinks = [
-  { label: 'Our work', href: '/work#projects' },
-  { label: 'About us', href: '/about#about' },
-  { label: 'People', href: '/people#team' },
-  { label: 'Contact', href: '/contact#contact' },
-]
 let context: gsap.Context | undefined
 let media: gsap.MatchMedia | undefined
 let removeMagnetic = () => {}
 let preloaderTimeline: gsap.core.Timeline | undefined
-let updateMenuVisibility = () => {}
 let handleResize = () => {}
 
 function goToStoryChapter(chapterId: string) {
@@ -54,7 +45,6 @@ function goToStoryChapter(chapterId: string) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  storyMenuOpen.value = false
 }
 
 function goBackToTop() {
@@ -461,17 +451,10 @@ onMounted(async () => {
   if (!root.value) return
   const storyRoot = root.value
 
-  updateMenuVisibility = () => {
-    showStoryMenu.value = window.scrollY > 140
-  }
-
-  const handleResize = () => {
-    updateMenuVisibility()
+  handleResize = () => {
     ScrollTrigger.refresh()
   }
 
-  updateMenuVisibility()
-  window.addEventListener('scroll', updateMenuVisibility, { passive: true })
   window.addEventListener('resize', handleResize, { passive: true })
 
   ScrollTrigger.config({ ignoreMobileResize: true })
@@ -496,7 +479,6 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', updateMenuVisibility)
   window.removeEventListener('resize', handleResize)
   preloaderTimeline?.kill()
   removeMagnetic()
@@ -513,33 +495,6 @@ onBeforeUnmount(() => {
   >
     <StoryPreloader v-if="preloaderActive" />
     <ChapterNav :chapters="chapters" :active-id="activeChapter" :lenis="lenis" />
-
-    <div class="story-floating-menu" :class="{ 'is-open': storyMenuOpen, 'is-visible': showStoryMenu }">
-      <button
-        type="button"
-        class="story-floating-menu-toggle"
-        :aria-expanded="storyMenuOpen"
-        aria-label="Open navigation menu"
-        @click="storyMenuOpen = !storyMenuOpen"
-      >
-        <span class="story-floating-menu-bars" aria-hidden="true">
-          <i></i><i></i><i></i>
-        </span>
-        <span class="story-floating-menu-label">Menu</span>
-      </button>
-
-      <div class="story-floating-menu-panel" aria-label="Story navigation menu">
-        <button
-          v-for="link in chapterLinks"
-          :key="link.href"
-          type="button"
-          @click="storyMenuOpen = false; emit('navigate', link.href)"
-        >
-          <span>{{ link.label }}</span>
-          <span aria-hidden="true">↗</span>
-        </button>
-      </div>
-    </div>
 
     <StoryCursor />
 
